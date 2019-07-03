@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Text;
 
 namespace PasswordHasher
 {
@@ -18,6 +19,7 @@ namespace PasswordHasher
 
             string userName = "yourname";
             string password = "Passw0rd#01";
+            NLXPassword.hashPassword(password); 
             testHash(userName, password);
         }
 
@@ -94,6 +96,42 @@ namespace PasswordHasher
                 if (b1[i] != b2[i]) return false;
             }
             return true;
+        }
+    }
+
+    public static class NLXPassword
+    {
+        public static string hashPassword(string password)
+        {
+            // Encode password & generate password salt
+            byte[] passwordData = Encoding.Unicode.GetBytes(password);
+            byte[] passwordSaltData = _PasswordSaltGenerate();
+
+            byte[] passwordDataSalted = new byte[passwordData.Length + passwordSaltData.Length];
+
+            // Put password & salt together
+            Buffer.BlockCopy(passwordSaltData, 0, passwordDataSalted, 0, passwordSaltData.Length);
+            Buffer.BlockCopy(passwordData, 0, passwordDataSalted, passwordSaltData.Length, passwordData.Length);
+
+            // Hash password & salt
+            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
+            byte[] passwordHashed = hash.ComputeHash(passwordDataSalted);
+
+            // Encode hashed password/salt & salt for storage
+            string passwordFinal = Convert.ToBase64String(passwordHashed);
+            string passwordSaltFinal = Convert.ToBase64String(passwordSaltData);
+            return passwordFinal; 
+
+        }
+        private static byte[] _PasswordSaltGenerate()
+        {
+            RNGCryptoServiceProvider rnd = new RNGCryptoServiceProvider();
+            byte[] retVal = new byte[16];
+
+            // Generate salt
+            rnd.GetBytes(retVal);
+
+            return retVal;
         }
     }
 }
