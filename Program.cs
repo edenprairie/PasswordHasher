@@ -15,7 +15,7 @@ namespace PasswordHasher
             //    Console.WriteLine("password is good");
             //else
             //    Console.WriteLine("bad password");
-            NLXPassword.CheckoldPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
+            NLXPassword.CheckPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
 
             string userName = "yourname";
             string password = "Pwd@1234";
@@ -114,7 +114,7 @@ namespace PasswordHasher
             Buffer.BlockCopy(passwordData, 0, passwordDataSalted, passwordSaltData.Length, passwordData.Length);
 
             // Hash password & salt
-            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
+            HashAlgorithm hash = HashAlgorithm.Create("SHA256");
             byte[] passwordHashed = hash.ComputeHash(passwordDataSalted);
 
             // Encode hashed password/salt & salt for storage
@@ -134,9 +134,9 @@ namespace PasswordHasher
             return retVal;
         }
 
-        public static bool CheckoldPassword(string accountName, string password)
+        public static bool CheckPassword(string accountName, string password)
         {
-            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
+            HashAlgorithm hash = HashAlgorithm.Create("SHA256");
             bool matchFound = false;
 
             string passwordOldEncoded = "N99Kd9wyWz1/UbQYXle8d6QtUFY=";
