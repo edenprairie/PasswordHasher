@@ -15,10 +15,10 @@ namespace PasswordHasher
             //    Console.WriteLine("password is good");
             //else
             //    Console.WriteLine("bad password");
-            
+            NLXPassword.CheckoldPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
 
             string userName = "yourname";
-            string password = "Passw0rd#01";
+            string password = "Pwd@1234";
             NLXPassword.hashPassword(password); 
             testHash(userName, password);
         }
@@ -132,6 +132,33 @@ namespace PasswordHasher
             rnd.GetBytes(retVal);
 
             return retVal;
+        }
+
+        public static bool CheckoldPassword(string accountName, string password)
+        {
+            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
+            bool matchFound = false;
+
+            string passwordOldEncoded = "N99Kd9wyWz1/UbQYXle8d6QtUFY=";
+            string passwordSaltEncoded = "hGGfEhZ5TodPW+P6SkpF6g==";
+
+            // Encode new password & decode old salt
+            byte[] passwordData = Encoding.Unicode.GetBytes(password);
+            byte[] passwordSaltData = Convert.FromBase64String(passwordSaltEncoded);
+
+            byte[] passwordDataSalted = new byte[passwordData.Length + passwordSaltData.Length];
+
+            // Apply old salt to new password
+            Buffer.BlockCopy(passwordSaltData, 0, passwordDataSalted, 0, passwordSaltData.Length);
+            Buffer.BlockCopy(passwordData, 0, passwordDataSalted, passwordSaltData.Length, passwordData.Length);
+
+            // Hash new password w/ old salt & encode
+            byte[] passwordHashed = hash.ComputeHash(passwordDataSalted);
+            string passwordFinal = Convert.ToBase64String(passwordHashed);
+
+            // Compare new password w/ old salt (hashed & encoded) against old password w/ old salt (hashed & encoded)
+            matchFound = (passwordFinal == passwordOldEncoded);
+            return matchFound; 
         }
     }
 }
