@@ -114,7 +114,7 @@ namespace PasswordHasher
             Buffer.BlockCopy(passwordData, 0, passwordDataSalted, passwordSaltData.Length, passwordData.Length);
 
             // Hash password & salt
-            HashAlgorithm hash = HashAlgorithm.Create("SHA256");
+            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
             byte[] passwordHashed = hash.ComputeHash(passwordDataSalted);
 
             // Encode hashed password/salt & salt for storage
@@ -136,7 +136,7 @@ namespace PasswordHasher
 
         public static bool CheckPassword(string accountName, string password)
         {
-            HashAlgorithm hash = HashAlgorithm.Create("SHA256");
+            HashAlgorithm hash = HashAlgorithm.Create("SHA1");
             bool matchFound = false;
 
             string passwordOldEncoded = "N99Kd9wyWz1/UbQYXle8d6QtUFY=";
