@@ -15,10 +15,10 @@ namespace PasswordHasher
             //    Console.WriteLine("password is good");
             //else
             //    Console.WriteLine("bad password");
-            NLXPassword.CheckPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
+            //NLXPassword.CheckPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
 
             string userName = "yourname";
-            string password = "Pwd@1234";
+            string password = "Test#1234";
             NLXPassword.hashPassword(password); 
             testHash(userName, password);
         }
@@ -120,6 +120,8 @@ namespace PasswordHasher
             // Encode hashed password/salt & salt for storage
             string passwordFinal = Convert.ToBase64String(passwordHashed);
             string passwordSaltFinal = Convert.ToBase64String(passwordSaltData);
+            Console.WriteLine(string.Format("Password hased string is {0}", passwordFinal));
+            Console.WriteLine(string.Format("Password salt string is {0}", passwordSaltFinal));
             return passwordFinal; 
 
         }
