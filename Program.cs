@@ -11,11 +11,20 @@ namespace PasswordHasher
 
             //string hassedPw = "AErbImYMthiY/MTaOV3uH3JWbfu0VtA2NX5KBa6QfV5w40157aMLN8QAVJDw8jymeQ==";
             //string beforehashPw = "wP]cU,?iJ)TpH3j#5C@P,5GZf?33f}";
-            //if (VerifyHashedPassword(hassedPw, beforehashPw))
-            //    Console.WriteLine("password is good");
-            //else
-            //    Console.WriteLine("bad password");
-            //NLXPassword.CheckPassword("jun.wang@cvshealth.com", "Pwd@1234"); 
+
+            //string hassedPw = "APEEYUPN1wjz0ihytN4cRRuHb4qVq7zRFsPjTBJu7zhuUfa5uYos3073LpsBEvfEXA ==";
+            //string beforehashPw = "Wjxq@31218218";
+
+            string hassedPw = "ALjDQR0qXr1F8Xp3hcSnGjYzXiA0tmwDNpq+oKU0fVYlAzHy7JL6+VkdHn1Rp+O2TA==";
+            string beforehashPw = "Passw0rd#01";
+            string password2bhashed = "Passw0rd#01";
+            string hashedPassword = HashPassword(password2bhashed);
+
+            if (VerifyHashedPassword(hassedPw, beforehashPw))
+                Console.WriteLine("password is good");
+            else
+                Console.WriteLine("bad password");
+            NLXPassword.CheckPassword("jun.wang@cvshealth.com", "Pwd@1234");
 
             string userName = "yourname";
             string password = "Test#1234";
