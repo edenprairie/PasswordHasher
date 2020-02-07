@@ -25,4 +25,8 @@ jobs:
       run: |
         MSBuild.exe PasswordHash.sln /p:Platform="Any CPU" /p:Configuration="Release"
         echo test, and deploy your project.
+    - uses: actions/upload-artifact@v1
+      with:
+        name: PasswordHasher_MSBuild
+        path: ./
  
