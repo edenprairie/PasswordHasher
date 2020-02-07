@@ -17,8 +17,15 @@ jobs:
         echo test, and deploy your project.
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
-    - name: Build application 
-      run: |
-        dir
-        "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" **\*.sln /p:Platform="Any CPU" /p:Configuration="Release"
-        echo test, and deploy your project.
+    #- name: Build application 
+    #  run: |
+    #    dir
+    #    "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe" **\*.sln /p:Platform="Any CPU" /p:Configuration="Release"
+    #    echo test, and deploy your project.
+    - name: msbuild project generator
+      uses: tix-factory/msbuild-project-generator@v1
+      with:
+        # The directory to scrape for all the project files.
+        directory: ./
+        # The output file location of the generated project file.
+        projectFile: PasswordHash.sln
